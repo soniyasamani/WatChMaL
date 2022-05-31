@@ -1,10 +1,10 @@
 gpu_list:
-    - 5
+    - 0
 seed: null
 dump_path: './outputs/'
 defaults:
-    - data: iwcd_short
-    - data/dataset: iwcd_cnn_short
+    - data: sk_full
+    - data/dataset: sk_full_cnn
     - model: classifier
     - model/feature_extractor: resnet18
     - model/classification_network: resnet_fc

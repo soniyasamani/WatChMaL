@@ -11,7 +11,7 @@ import numpy as np
 
 # WatChMaL imports
 from watchmal.dataset.h5_dataset import H5Dataset
-from watchmal.dataset.cnn_mpmt import transformations
+#from watchmal.dataset.cnn_mpmt import transformations
 import watchmal.dataset.data_utils as du
 
 class CNNDataset(H5Dataset):
@@ -44,12 +44,12 @@ class CNNDataset(H5Dataset):
         Returns:
             data                    ... array of hits in cnn format
         """
-        hit_pmts -= 1 #SK cable numbers start at 1
+        hit_pmts = hit_pmts-1 #SK cable numbers start at 1
 
         hit_rows = self.pmt_positions[hit_pmts, 0]
         hit_cols = self.pmt_positions[hit_pmts, 1]
 
-        data = np.zeros(self.data_size)
+        data = np.zeros(self.data_size, dtype=np.float32)
         data[0, hit_rows, hit_cols] = hit_data
 
         # fix barrel array indexing to match endcaps in xyz ordering

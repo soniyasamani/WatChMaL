@@ -1,0 +1,5 @@
+_target_: watchmal.dataset.cnn.cnn_dataset.CNNDataset
+pmt_positions_file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/SK_PMT_image_positions.npz
+collapse_arrays: False
+#pad: True
+
