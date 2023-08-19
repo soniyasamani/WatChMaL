@@ -1,0 +1,188 @@
+[2023-08-14 11:36:41,287][train][INFO] - Running with the following config:
+data:
+  split_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/npz/cnn.merged.lowfit.splash.anglered.ndet.sk6.r85220.r87220.70.27k.2023-08-14.npz
+  dataset:
+    h5file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/h5/cnn.merged.lowfit.splash.anglered.ndet.sk6.r85220.r87220.70.27k.2023-08-14.h5
+    _target_: watchmal.dataset.cnn.cnn_dataset.CNNDataset
+    pmt_positions_file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/npz_image/SK_PMT_image_positions.npz
+    collapse_arrays: false
+model:
+  _recursive_: false
+  _target_: watchmal.model.classifier.Classifier
+  num_classes: 2
+  feature_extractor:
+    _target_: watchmal.model.resnet.resnet18
+    num_input_channels: 1
+    num_output_channels: 128
+  classification_network:
+    _target_: watchmal.model.classifier.ResNetFullyConnected
+engine:
+  _target_: watchmal.engine.engine_classifier.ClassifierEngine
+tasks:
+  train:
+    epochs: 10
+    report_interval: 100
+    val_interval: 100
+    num_val_batches: 32
+    checkpointing: false
+    data_loaders:
+      train:
+        split_key: train_idxs
+        batch_size: 256
+        num_workers: 1
+        transforms: null
+        sampler:
+          _target_: torch.utils.data.sampler.SubsetRandomSampler
+      validation:
+        split_key: val_idxs
+        batch_size: 32
+        num_workers: 1
+        sampler:
+          _target_: torch.utils.data.sampler.SubsetRandomSampler
+    optimizers:
+      _target_: torch.optim.Adam
+      lr: 0.001
+      weight_decay: 0
+  restore_best_state:
+    placeholder: configs can't be empty
+  evaluate:
+    data_loaders:
+      test:
+        split_key: test_idxs
+        batch_size: 256
+        num_workers: 4
+        sampler:
+          _target_: watchmal.dataset.samplers.SubsetSequentialSampler
+gpu_list:
+- 0
+- 1
+seed: null
+dump_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/
+
+Creating a directory for run dump at : /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/
+Dump path: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/
+Using multiprocessing...
+Using DistributedDataParallel on these devices: ['cuda:0', 'cuda:1']
+Running main worker function on device: 1
+Running main worker function on device: 0
+Training... Validation Interval: 100
+Epoch 1 Starting @ 2023-08-14 11:36:48
+best validation loss so far!: 0.6952742226421833
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+... Iteration 100 ... Epoch 1 ... Step 100/220  ... Training Loss 0.285 ... Training Accuracy 0.914 ... Time Elapsed 48.660 ... Iteration Time 48.660
+best validation loss so far!: 0.3239044747897424
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+... Iteration 200 ... Epoch 1 ... Step 200/220  ... Training Loss 0.170 ... Training Accuracy 0.945 ... Time Elapsed 96.561 ... Iteration Time 47.901
+Epoch 2 Starting @ 2023-08-14 11:38:35
+... Iteration 300 ... Epoch 2 ... Step 80/220  ... Training Loss 0.278 ... Training Accuracy 0.883 ... Time Elapsed 38.184 ... Iteration Time 38.184
+... Iteration 400 ... Epoch 2 ... Step 180/220  ... Training Loss 0.468 ... Training Accuracy 0.836 ... Time Elapsed 86.314 ... Iteration Time 48.130
+best validation loss so far!: 0.2740654919180088
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Epoch 3 Starting @ 2023-08-14 11:40:21
+... Iteration 500 ... Epoch 3 ... Step 60/220  ... Training Loss 0.237 ... Training Accuracy 0.906 ... Time Elapsed 29.025 ... Iteration Time 29.025
+... Iteration 600 ... Epoch 3 ... Step 160/220  ... Training Loss 0.244 ... Training Accuracy 0.930 ... Time Elapsed 77.449 ... Iteration Time 48.424
+Fetching new validation iterator...
+Epoch 4 Starting @ 2023-08-14 11:42:07
+... Iteration 700 ... Epoch 4 ... Step 40/220  ... Training Loss 0.200 ... Training Accuracy 0.930 ... Time Elapsed 19.510 ... Iteration Time 19.510
+... Iteration 800 ... Epoch 4 ... Step 140/220  ... Training Loss 0.396 ... Training Accuracy 0.875 ... Time Elapsed 68.138 ... Iteration Time 48.628
+Epoch 5 Starting @ 2023-08-14 11:43:54
+... Iteration 900 ... Epoch 5 ... Step 20/220  ... Training Loss 0.239 ... Training Accuracy 0.930 ... Time Elapsed 9.953 ... Iteration Time 9.953
+... Iteration 1000 ... Epoch 5 ... Step 120/220  ... Training Loss 0.306 ... Training Accuracy 0.914 ... Time Elapsed 58.698 ... Iteration Time 48.745
+... Iteration 1100 ... Epoch 5 ... Step 220/220  ... Training Loss 0.417 ... Training Accuracy 0.816 ... Time Elapsed 107.525 ... Iteration Time 48.827
+Epoch 6 Starting @ 2023-08-14 11:45:42
+... Iteration 1200 ... Epoch 6 ... Step 100/220  ... Training Loss 0.214 ... Training Accuracy 0.914 ... Time Elapsed 49.113 ... Iteration Time 49.113
+... Iteration 1300 ... Epoch 6 ... Step 200/220  ... Training Loss 0.203 ... Training Accuracy 0.922 ... Time Elapsed 97.695 ... Iteration Time 48.582
+Fetching new validation iterator...
+best validation loss so far!: 0.2727209473378025
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Epoch 7 Starting @ 2023-08-14 11:47:30
+... Iteration 1400 ... Epoch 7 ... Step 80/220  ... Training Loss 0.218 ... Training Accuracy 0.914 ... Time Elapsed 38.662 ... Iteration Time 38.662
+... Iteration 1500 ... Epoch 7 ... Step 180/220  ... Training Loss 0.257 ... Training Accuracy 0.914 ... Time Elapsed 87.321 ... Iteration Time 48.659
+best validation loss so far!: 0.2705377563252114
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Epoch 8 Starting @ 2023-08-14 11:49:17
+... Iteration 1600 ... Epoch 8 ... Step 60/220  ... Training Loss 0.211 ... Training Accuracy 0.938 ... Time Elapsed 29.447 ... Iteration Time 29.447
+... Iteration 1700 ... Epoch 8 ... Step 160/220  ... Training Loss 0.321 ... Training Accuracy 0.867 ... Time Elapsed 78.447 ... Iteration Time 49.000
+Epoch 9 Starting @ 2023-08-14 11:51:05
+... Iteration 1800 ... Epoch 9 ... Step 40/220  ... Training Loss 0.154 ... Training Accuracy 0.953 ... Time Elapsed 19.607 ... Iteration Time 19.607
+... Iteration 1900 ... Epoch 9 ... Step 140/220  ... Training Loss 0.167 ... Training Accuracy 0.938 ... Time Elapsed 68.481 ... Iteration Time 48.874
+best validation loss so far!: 0.25626894482411444
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Epoch 10 Starting @ 2023-08-14 11:52:53
+... Iteration 2000 ... Epoch 10 ... Step 20/220  ... Training Loss 0.248 ... Training Accuracy 0.898 ... Time Elapsed 9.847 ... Iteration Time 9.847
+Fetching new validation iterator...
+... Iteration 2100 ... Epoch 10 ... Step 120/220  ... Training Loss 0.207 ... Training Accuracy 0.930 ... Time Elapsed 58.472 ... Iteration Time 48.625
+... Iteration 2200 ... Epoch 10 ... Step 220/220  ... Training Loss 0.210 ... Training Accuracy 0.934 ... Time Elapsed 107.015 ... Iteration Time 48.543
+Restoring state from /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Restoration complete.
+evaluating in directory:  /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/
+Fetching new validation iterator...
+Fetching new validation iterator...
+Fetching new validation iterator...
+Restoring state from /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/DistributedDataParallelBEST.pth
+Restoration complete.
+evaluating in directory:  /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered_ndet/
+eval_iteration : 0 eval_loss : 0.3082733750343323 eval_accuracy : 0.890625
+eval_iteration : 1 eval_loss : 0.24060994386672974 eval_accuracy : 0.921875
+eval_iteration : 2 eval_loss : 0.15872463583946228 eval_accuracy : 0.9453125
+eval_iteration : 3 eval_loss : 0.22055165469646454 eval_accuracy : 0.9375
+eval_iteration : 4 eval_loss : 0.1961929202079773 eval_accuracy : 0.9375
+eval_iteration : 5 eval_loss : 0.22219274938106537 eval_accuracy : 0.9296875
+eval_iteration : 6 eval_loss : 0.22458085417747498 eval_accuracy : 0.9375
+eval_iteration : 7 eval_loss : 0.3219846487045288 eval_accuracy : 0.90625
+eval_iteration : 8 eval_loss : 0.2520177662372589 eval_accuracy : 0.8984375
+eval_iteration : 9 eval_loss : 0.2724193036556244 eval_accuracy : 0.9140625
+eval_iteration : 10 eval_loss : 0.32021886110305786 eval_accuracy : 0.875
+eval_iteration : 11 eval_loss : 0.214352086186409 eval_accuracy : 0.9296875
+eval_iteration : 12 eval_loss : 0.20477749407291412 eval_accuracy : 0.9453125
+eval_iteration : 13 eval_loss : 0.22173847258090973 eval_accuracy : 0.9296875
+eval_iteration : 14 eval_loss : 0.23486369848251343 eval_accuracy : 0.921875
+eval_iteration : 15 eval_loss : 0.27597302198410034 eval_accuracy : 0.90625
+eval_iteration : 16 eval_loss : 0.16767387092113495 eval_accuracy : 0.9453125
+eval_iteration : 17 eval_loss : 0.2888793647289276 eval_accuracy : 0.890625
+eval_iteration : 18 eval_loss : 0.2674565315246582 eval_accuracy : 0.90625
+eval_iteration : 19 eval_loss : 0.1901596039533615 eval_accuracy : 0.9140625
+eval_iteration : 20 eval_loss : 0.2030034363269806 eval_accuracy : 0.921875
+eval_iteration : 21 eval_loss : 0.29936763644218445 eval_accuracy : 0.9140625
+eval_iteration : 22 eval_loss : 0.21719872951507568 eval_accuracy : 0.9296875
+eval_iteration : 23 eval_loss : 0.2176954299211502 eval_accuracy : 0.9296875
+eval_iteration : 24 eval_loss : 0.30385756492614746 eval_accuracy : 0.8828125
+eval_iteration : 25 eval_loss : 0.23708786070346832 eval_accuracy : 0.9296875
+eval_iteration : 26 eval_loss : 0.1939486861228943 eval_accuracy : 0.9375
+eval_iteration : 27 eval_loss : 0.10448772460222244 eval_accuracy : 0.9827586206896551
+loss : 0.23501028306782246 accuracy : 0.9218172721674877
+eval_iteration : 0 eval_loss : 0.25364962220191956 eval_accuracy : 0.921875
+eval_iteration : 1 eval_loss : 0.2820824980735779 eval_accuracy : 0.9140625
+eval_iteration : 2 eval_loss : 0.2582872211933136 eval_accuracy : 0.90625
+eval_iteration : 3 eval_loss : 0.23390261828899384 eval_accuracy : 0.921875
+eval_iteration : 4 eval_loss : 0.24729880690574646 eval_accuracy : 0.9375
+eval_iteration : 5 eval_loss : 0.2450251579284668 eval_accuracy : 0.8984375
+eval_iteration : 6 eval_loss : 0.2583678364753723 eval_accuracy : 0.9140625
+eval_iteration : 7 eval_loss : 0.42064768075942993 eval_accuracy : 0.8515625
+eval_iteration : 8 eval_loss : 0.32648181915283203 eval_accuracy : 0.8984375
+eval_iteration : 9 eval_loss : 0.25681912899017334 eval_accuracy : 0.9140625
+eval_iteration : 10 eval_loss : 0.19132089614868164 eval_accuracy : 0.9375
+eval_iteration : 11 eval_loss : 0.21636545658111572 eval_accuracy : 0.9453125
+eval_iteration : 12 eval_loss : 0.1711920201778412 eval_accuracy : 0.9296875
+eval_iteration : 13 eval_loss : 0.31447291374206543 eval_accuracy : 0.8984375
+eval_iteration : 14 eval_loss : 0.19427374005317688 eval_accuracy : 0.9296875
+eval_iteration : 15 eval_loss : 0.2515679895877838 eval_accuracy : 0.9140625
+eval_iteration : 16 eval_loss : 0.3607759177684784 eval_accuracy : 0.8984375
+eval_iteration : 17 eval_loss : 0.2139585018157959 eval_accuracy : 0.9296875
+eval_iteration : 18 eval_loss : 0.2732029855251312 eval_accuracy : 0.9140625
+eval_iteration : 19 eval_loss : 0.19743694365024567 eval_accuracy : 0.9296875
+eval_iteration : 20 eval_loss : 0.2203514575958252 eval_accuracy : 0.921875
+eval_iteration : 21 eval_loss : 0.3040219247341156 eval_accuracy : 0.8984375
+eval_iteration : 22 eval_loss : 0.2364037185907364 eval_accuracy : 0.921875
+eval_iteration : 23 eval_loss : 0.2289709746837616 eval_accuracy : 0.9453125
+eval_iteration : 24 eval_loss : 0.22571486234664917 eval_accuracy : 0.9375
+eval_iteration : 25 eval_loss : 0.24160568416118622 eval_accuracy : 0.921875
+eval_iteration : 26 eval_loss : 0.20834341645240784 eval_accuracy : 0.9375
+eval_iteration : 27 eval_loss : 0.28117284178733826 eval_accuracy : 0.9310344827586207
+loss : 0.2540612369775772 accuracy : 0.9185748922413792
+Saving Data...
+
+Avg eval loss : 0.24453576002269983 
+Avg eval acc : 0.9201960822044334
+Time taken: 1104.47 seconds.
+job done!

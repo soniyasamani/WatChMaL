@@ -1,0 +1,366 @@
+[2023-08-14 11:46:59,722][train][INFO] - Running with the following config:
+data:
+  split_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/npz/cnn.merged.lowfit.splash.anglered.sk6.r85220.r87220.236.342k.2023-08-14.npz
+  dataset:
+    h5file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/h5/cnn.merged.lowfit.splash.anglered.sk6.r85220.r87220.236.342k.2023-08-14.h5
+    _target_: watchmal.dataset.cnn.cnn_dataset.CNNDataset
+    pmt_positions_file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/npz_image/SK_PMT_image_positions.npz
+    collapse_arrays: false
+model:
+  _recursive_: false
+  _target_: watchmal.model.classifier.Classifier
+  num_classes: 2
+  feature_extractor:
+    _target_: watchmal.model.resnet.resnet18
+    num_input_channels: 1
+    num_output_channels: 128
+  classification_network:
+    _target_: watchmal.model.classifier.ResNetFullyConnected
+engine:
+  _target_: watchmal.engine.engine_classifier.ClassifierEngine
+tasks:
+  train:
+    epochs: 10
+    report_interval: 100
+    val_interval: 100
+    num_val_batches: 32
+    checkpointing: false
+    data_loaders:
+      train:
+        split_key: train_idxs
+        batch_size: 256
+        num_workers: 1
+        transforms: null
+        sampler:
+          _target_: torch.utils.data.sampler.SubsetRandomSampler
+      validation:
+        split_key: val_idxs
+        batch_size: 32
+        num_workers: 1
+        sampler:
+          _target_: torch.utils.data.sampler.SubsetRandomSampler
+    optimizers:
+      _target_: torch.optim.Adam
+      lr: 0.001
+      weight_decay: 0
+  restore_best_state:
+    placeholder: configs can't be empty
+  evaluate:
+    data_loaders:
+      test:
+        split_key: test_idxs
+        batch_size: 256
+        num_workers: 4
+        sampler:
+          _target_: watchmal.dataset.samplers.SubsetSequentialSampler
+gpu_list:
+- 0
+- 1
+seed: null
+dump_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/
+
+Dump path: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/
+Using multiprocessing...
+Using DistributedDataParallel on these devices: ['cuda:0', 'cuda:1']
+Running main worker function on device: 0
+Training... Validation Interval: 100
+Running main worker function on device: 1
+Epoch 1 Starting @ 2023-08-14 11:47:08
+best validation loss so far!: 0.6984542543068528
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+... Iteration 100 ... Epoch 1 ... Step 100/739  ... Training Loss 0.325 ... Training Accuracy 0.875 ... Time Elapsed 49.718 ... Iteration Time 49.718
+... Iteration 200 ... Epoch 1 ... Step 200/739  ... Training Loss 0.285 ... Training Accuracy 0.898 ... Time Elapsed 97.998 ... Iteration Time 48.280
+... Iteration 300 ... Epoch 1 ... Step 300/739  ... Training Loss 0.289 ... Training Accuracy 0.906 ... Time Elapsed 145.787 ... Iteration Time 47.789
+best validation loss so far!: 0.38720458769239485
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+... Iteration 400 ... Epoch 1 ... Step 400/739  ... Training Loss 0.218 ... Training Accuracy 0.922 ... Time Elapsed 194.037 ... Iteration Time 48.250
+best validation loss so far!: 0.2842448757728562
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+... Iteration 500 ... Epoch 1 ... Step 500/739  ... Training Loss 0.179 ... Training Accuracy 0.945 ... Time Elapsed 242.492 ... Iteration Time 48.455
+... Iteration 600 ... Epoch 1 ... Step 600/739  ... Training Loss 0.257 ... Training Accuracy 0.914 ... Time Elapsed 290.738 ... Iteration Time 48.246
+best validation loss so far!: 0.21458092198008671
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+... Iteration 700 ... Epoch 1 ... Step 700/739  ... Training Loss 0.310 ... Training Accuracy 0.875 ... Time Elapsed 339.432 ... Iteration Time 48.694
+Epoch 2 Starting @ 2023-08-14 11:53:07
+... Iteration 800 ... Epoch 2 ... Step 61/739  ... Training Loss 0.278 ... Training Accuracy 0.891 ... Time Elapsed 30.015 ... Iteration Time 30.015
+... Iteration 900 ... Epoch 2 ... Step 161/739  ... Training Loss 0.212 ... Training Accuracy 0.945 ... Time Elapsed 78.374 ... Iteration Time 48.359
+... Iteration 1000 ... Epoch 2 ... Step 261/739  ... Training Loss 0.347 ... Training Accuracy 0.875 ... Time Elapsed 126.734 ... Iteration Time 48.360
+... Iteration 1100 ... Epoch 2 ... Step 361/739  ... Training Loss 0.259 ... Training Accuracy 0.906 ... Time Elapsed 175.277 ... Iteration Time 48.543
+... Iteration 1200 ... Epoch 2 ... Step 461/739  ... Training Loss 0.158 ... Training Accuracy 0.953 ... Time Elapsed 223.710 ... Iteration Time 48.433
+... Iteration 1300 ... Epoch 2 ... Step 561/739  ... Training Loss 0.407 ... Training Accuracy 0.852 ... Time Elapsed 272.344 ... Iteration Time 48.634
+... Iteration 1400 ... Epoch 2 ... Step 661/739  ... Training Loss 0.295 ... Training Accuracy 0.898 ... Time Elapsed 321.446 ... Iteration Time 49.101
+Epoch 3 Starting @ 2023-08-14 11:59:06
+... Iteration 1500 ... Epoch 3 ... Step 22/739  ... Training Loss 0.117 ... Training Accuracy 0.961 ... Time Elapsed 11.161 ... Iteration Time 11.161
+... Iteration 1600 ... Epoch 3 ... Step 122/739  ... Training Loss 0.167 ... Training Accuracy 0.961 ... Time Elapsed 59.876 ... Iteration Time 48.714
+... Iteration 1700 ... Epoch 3 ... Step 222/739  ... Training Loss 0.156 ... Training Accuracy 0.953 ... Time Elapsed 108.691 ... Iteration Time 48.815
+... Iteration 1800 ... Epoch 3 ... Step 322/739  ... Training Loss 0.309 ... Training Accuracy 0.898 ... Time Elapsed 157.633 ... Iteration Time 48.942
+... Iteration 1900 ... Epoch 3 ... Step 422/739  ... Training Loss 0.199 ... Training Accuracy 0.938 ... Time Elapsed 206.654 ... Iteration Time 49.021
+... Iteration 2000 ... Epoch 3 ... Step 522/739  ... Training Loss 0.316 ... Training Accuracy 0.898 ... Time Elapsed 255.205 ... Iteration Time 48.551
+... Iteration 2100 ... Epoch 3 ... Step 622/739  ... Training Loss 0.163 ... Training Accuracy 0.945 ... Time Elapsed 303.698 ... Iteration Time 48.493
+... Iteration 2200 ... Epoch 3 ... Step 722/739  ... Training Loss 0.326 ... Training Accuracy 0.906 ... Time Elapsed 352.218 ... Iteration Time 48.520
+Epoch 4 Starting @ 2023-08-14 12:05:07
+... Iteration 2300 ... Epoch 4 ... Step 83/739  ... Training Loss 0.189 ... Training Accuracy 0.930 ... Time Elapsed 40.641 ... Iteration Time 40.641
+Fetching new validation iterator...
+... Iteration 2400 ... Epoch 4 ... Step 183/739  ... Training Loss 0.298 ... Training Accuracy 0.898 ... Time Elapsed 89.478 ... Iteration Time 48.836
+... Iteration 2500 ... Epoch 4 ... Step 283/739  ... Training Loss 0.288 ... Training Accuracy 0.922 ... Time Elapsed 138.386 ... Iteration Time 48.909
+... Iteration 2600 ... Epoch 4 ... Step 383/739  ... Training Loss 0.073 ... Training Accuracy 0.984 ... Time Elapsed 187.043 ... Iteration Time 48.657
+... Iteration 2700 ... Epoch 4 ... Step 483/739  ... Training Loss 0.284 ... Training Accuracy 0.898 ... Time Elapsed 235.692 ... Iteration Time 48.648
+... Iteration 2800 ... Epoch 4 ... Step 583/739  ... Training Loss 0.143 ... Training Accuracy 0.953 ... Time Elapsed 284.250 ... Iteration Time 48.558
+... Iteration 2900 ... Epoch 4 ... Step 683/739  ... Training Loss 0.206 ... Training Accuracy 0.922 ... Time Elapsed 332.914 ... Iteration Time 48.664
+best validation loss so far!: 0.1919175423681736
+Saved checkpoint as: /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+Epoch 5 Starting @ 2023-08-14 12:11:08
+... Iteration 3000 ... Epoch 5 ... Step 44/739  ... Training Loss 0.273 ... Training Accuracy 0.906 ... Time Elapsed 21.793 ... Iteration Time 21.793
+... Iteration 3100 ... Epoch 5 ... Step 144/739  ... Training Loss 0.195 ... Training Accuracy 0.938 ... Time Elapsed 70.753 ... Iteration Time 48.960
+... Iteration 3200 ... Epoch 5 ... Step 244/739  ... Training Loss 0.239 ... Training Accuracy 0.914 ... Time Elapsed 119.403 ... Iteration Time 48.650
+... Iteration 3300 ... Epoch 5 ... Step 344/739  ... Training Loss 0.137 ... Training Accuracy 0.969 ... Time Elapsed 168.042 ... Iteration Time 48.638
+... Iteration 3400 ... Epoch 5 ... Step 444/739  ... Training Loss 0.293 ... Training Accuracy 0.906 ... Time Elapsed 216.668 ... Iteration Time 48.627
+... Iteration 3500 ... Epoch 5 ... Step 544/739  ... Training Loss 0.121 ... Training Accuracy 0.969 ... Time Elapsed 265.255 ... Iteration Time 48.587
+... Iteration 3600 ... Epoch 5 ... Step 644/739  ... Training Loss 0.277 ... Training Accuracy 0.883 ... Time Elapsed 313.838 ... Iteration Time 48.583
+Epoch 6 Starting @ 2023-08-14 12:17:08
+... Iteration 3700 ... Epoch 6 ... Step 5/739  ... Training Loss 0.281 ... Training Accuracy 0.906 ... Time Elapsed 2.973 ... Iteration Time 2.973
+... Iteration 3800 ... Epoch 6 ... Step 105/739  ... Training Loss 0.288 ... Training Accuracy 0.898 ... Time Elapsed 51.608 ... Iteration Time 48.635
+... Iteration 3900 ... Epoch 6 ... Step 205/739  ... Training Loss 0.308 ... Training Accuracy 0.883 ... Time Elapsed 100.237 ... Iteration Time 48.629
+... Iteration 4000 ... Epoch 6 ... Step 305/739  ... Training Loss 0.281 ... Training Accuracy 0.906 ... Time Elapsed 148.889 ... Iteration Time 48.652
+... Iteration 4100 ... Epoch 6 ... Step 405/739  ... Training Loss 0.182 ... Training Accuracy 0.953 ... Time Elapsed 197.554 ... Iteration Time 48.665
+... Iteration 4200 ... Epoch 6 ... Step 505/739  ... Training Loss 0.213 ... Training Accuracy 0.938 ... Time Elapsed 246.214 ... Iteration Time 48.660
+... Iteration 4300 ... Epoch 6 ... Step 605/739  ... Training Loss 0.224 ... Training Accuracy 0.938 ... Time Elapsed 294.992 ... Iteration Time 48.778
+... Iteration 4400 ... Epoch 6 ... Step 705/739  ... Training Loss 0.337 ... Training Accuracy 0.867 ... Time Elapsed 343.599 ... Iteration Time 48.607
+Epoch 7 Starting @ 2023-08-14 12:23:08
+... Iteration 4500 ... Epoch 7 ... Step 66/739  ... Training Loss 0.232 ... Training Accuracy 0.914 ... Time Elapsed 32.414 ... Iteration Time 32.414
+... Iteration 4600 ... Epoch 7 ... Step 166/739  ... Training Loss 0.212 ... Training Accuracy 0.938 ... Time Elapsed 80.962 ... Iteration Time 48.548
+Fetching new validation iterator...
+... Iteration 4700 ... Epoch 7 ... Step 266/739  ... Training Loss 0.172 ... Training Accuracy 0.938 ... Time Elapsed 129.555 ... Iteration Time 48.593
+... Iteration 4800 ... Epoch 7 ... Step 366/739  ... Training Loss 0.323 ... Training Accuracy 0.883 ... Time Elapsed 178.107 ... Iteration Time 48.552
+... Iteration 4900 ... Epoch 7 ... Step 466/739  ... Training Loss 0.228 ... Training Accuracy 0.938 ... Time Elapsed 226.845 ... Iteration Time 48.737
+... Iteration 5000 ... Epoch 7 ... Step 566/739  ... Training Loss 0.267 ... Training Accuracy 0.922 ... Time Elapsed 275.807 ... Iteration Time 48.962
+... Iteration 5100 ... Epoch 7 ... Step 666/739  ... Training Loss 0.186 ... Training Accuracy 0.930 ... Time Elapsed 324.508 ... Iteration Time 48.701
+Epoch 8 Starting @ 2023-08-14 12:29:08
+... Iteration 5200 ... Epoch 8 ... Step 27/739  ... Training Loss 0.135 ... Training Accuracy 0.969 ... Time Elapsed 13.542 ... Iteration Time 13.542
+... Iteration 5300 ... Epoch 8 ... Step 127/739  ... Training Loss 0.195 ... Training Accuracy 0.914 ... Time Elapsed 62.069 ... Iteration Time 48.527
+... Iteration 5400 ... Epoch 8 ... Step 227/739  ... Training Loss 0.285 ... Training Accuracy 0.883 ... Time Elapsed 110.608 ... Iteration Time 48.540
+... Iteration 5500 ... Epoch 8 ... Step 327/739  ... Training Loss 0.249 ... Training Accuracy 0.930 ... Time Elapsed 159.335 ... Iteration Time 48.726
+... Iteration 5600 ... Epoch 8 ... Step 427/739  ... Training Loss 0.267 ... Training Accuracy 0.898 ... Time Elapsed 208.056 ... Iteration Time 48.721
+... Iteration 5700 ... Epoch 8 ... Step 527/739  ... Training Loss 0.195 ... Training Accuracy 0.938 ... Time Elapsed 256.716 ... Iteration Time 48.660
+... Iteration 5800 ... Epoch 8 ... Step 627/739  ... Training Loss 0.230 ... Training Accuracy 0.930 ... Time Elapsed 305.394 ... Iteration Time 48.679
+... Iteration 5900 ... Epoch 8 ... Step 727/739  ... Training Loss 0.199 ... Training Accuracy 0.914 ... Time Elapsed 354.066 ... Iteration Time 48.671
+Epoch 9 Starting @ 2023-08-14 12:35:08
+... Iteration 6000 ... Epoch 9 ... Step 88/739  ... Training Loss 0.205 ... Training Accuracy 0.922 ... Time Elapsed 43.034 ... Iteration Time 43.034
+... Iteration 6100 ... Epoch 9 ... Step 188/739  ... Training Loss 0.233 ... Training Accuracy 0.906 ... Time Elapsed 91.786 ... Iteration Time 48.752
+... Iteration 6200 ... Epoch 9 ... Step 288/739  ... Training Loss 0.253 ... Training Accuracy 0.914 ... Time Elapsed 140.480 ... Iteration Time 48.695
+... Iteration 6300 ... Epoch 9 ... Step 388/739  ... Training Loss 0.234 ... Training Accuracy 0.922 ... Time Elapsed 188.999 ... Iteration Time 48.519
+... Iteration 6400 ... Epoch 9 ... Step 488/739  ... Training Loss 0.172 ... Training Accuracy 0.961 ... Time Elapsed 265.146 ... Iteration Time 76.147
+... Iteration 6500 ... Epoch 9 ... Step 588/739  ... Training Loss 0.186 ... Training Accuracy 0.945 ... Time Elapsed 313.249 ... Iteration Time 48.103
+... Iteration 6600 ... Epoch 9 ... Step 688/739  ... Training Loss 0.128 ... Training Accuracy 0.961 ... Time Elapsed 361.511 ... Iteration Time 48.262
+Epoch 10 Starting @ 2023-08-14 12:41:35
+... Iteration 6700 ... Epoch 10 ... Step 49/739  ... Training Loss 0.263 ... Training Accuracy 0.906 ... Time Elapsed 24.178 ... Iteration Time 24.178
+... Iteration 6800 ... Epoch 10 ... Step 149/739  ... Training Loss 0.098 ... Training Accuracy 0.984 ... Time Elapsed 72.750 ... Iteration Time 48.572
+... Iteration 6900 ... Epoch 10 ... Step 249/739  ... Training Loss 0.142 ... Training Accuracy 0.953 ... Time Elapsed 121.265 ... Iteration Time 48.515
+Fetching new validation iterator...
+... Iteration 7000 ... Epoch 10 ... Step 349/739  ... Training Loss 0.183 ... Training Accuracy 0.922 ... Time Elapsed 169.998 ... Iteration Time 48.733
+... Iteration 7100 ... Epoch 10 ... Step 449/739  ... Training Loss 0.172 ... Training Accuracy 0.938 ... Time Elapsed 218.644 ... Iteration Time 48.646
+... Iteration 7200 ... Epoch 10 ... Step 549/739  ... Training Loss 0.189 ... Training Accuracy 0.945 ... Time Elapsed 267.358 ... Iteration Time 48.714
+... Iteration 7300 ... Epoch 10 ... Step 649/739  ... Training Loss 0.155 ... Training Accuracy 0.961 ... Time Elapsed 316.083 ... Iteration Time 48.724
+Restoring state from /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+Restoration complete.
+evaluating in directory:  /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/
+Fetching new validation iterator...
+Fetching new validation iterator...
+Fetching new validation iterator...
+Restoring state from /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/DistributedDataParallelBEST.pth
+Restoration complete.
+evaluating in directory:  /opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/anglered/
+eval_iteration : 0 eval_loss : 0.2994646430015564 eval_accuracy : 0.8984375
+eval_iteration : 1 eval_loss : 0.22184528410434723 eval_accuracy : 0.9375
+eval_iteration : 2 eval_loss : 0.3023836314678192 eval_accuracy : 0.9140625
+eval_iteration : 3 eval_loss : 0.2841164171695709 eval_accuracy : 0.8828125
+eval_iteration : 4 eval_loss : 0.20521314442157745 eval_accuracy : 0.921875
+eval_iteration : 5 eval_loss : 0.15496310591697693 eval_accuracy : 0.9453125
+eval_iteration : 6 eval_loss : 0.24364513158798218 eval_accuracy : 0.8828125
+eval_iteration : 7 eval_loss : 0.22047993540763855 eval_accuracy : 0.921875
+eval_iteration : 8 eval_loss : 0.1555422693490982 eval_accuracy : 0.96875
+eval_iteration : 9 eval_loss : 0.13143229484558105 eval_accuracy : 0.953125
+eval_iteration : 10 eval_loss : 0.22046920657157898 eval_accuracy : 0.8984375
+eval_iteration : 11 eval_loss : 0.2962990701198578 eval_accuracy : 0.890625
+eval_iteration : 12 eval_loss : 0.2988467514514923 eval_accuracy : 0.921875
+eval_iteration : 13 eval_loss : 0.28603607416152954 eval_accuracy : 0.890625
+eval_iteration : 14 eval_loss : 0.16381941735744476 eval_accuracy : 0.9453125
+eval_iteration : 15 eval_loss : 0.2810620963573456 eval_accuracy : 0.90625
+eval_iteration : 16 eval_loss : 0.18514400720596313 eval_accuracy : 0.9375
+eval_iteration : 17 eval_loss : 0.22239995002746582 eval_accuracy : 0.921875
+eval_iteration : 18 eval_loss : 0.2636304497718811 eval_accuracy : 0.9140625
+eval_iteration : 19 eval_loss : 0.21803025901317596 eval_accuracy : 0.9296875
+eval_iteration : 20 eval_loss : 0.20914126932621002 eval_accuracy : 0.8984375
+eval_iteration : 21 eval_loss : 0.31925931572914124 eval_accuracy : 0.8828125
+eval_iteration : 22 eval_loss : 0.1503499448299408 eval_accuracy : 0.9609375
+eval_iteration : 23 eval_loss : 0.24795791506767273 eval_accuracy : 0.9375
+eval_iteration : 24 eval_loss : 0.18627187609672546 eval_accuracy : 0.9453125
+eval_iteration : 25 eval_loss : 0.19796591997146606 eval_accuracy : 0.9375
+eval_iteration : 26 eval_loss : 0.18886837363243103 eval_accuracy : 0.9375
+eval_iteration : 27 eval_loss : 0.12863990664482117 eval_accuracy : 0.96875
+eval_iteration : 28 eval_loss : 0.21516753733158112 eval_accuracy : 0.9296875
+eval_iteration : 29 eval_loss : 0.252806693315506 eval_accuracy : 0.90625
+eval_iteration : 30 eval_loss : 0.22749540209770203 eval_accuracy : 0.9140625
+eval_iteration : 31 eval_loss : 0.16818855702877045 eval_accuracy : 0.9375
+eval_iteration : 32 eval_loss : 0.29409027099609375 eval_accuracy : 0.9140625
+eval_iteration : 33 eval_loss : 0.22350357472896576 eval_accuracy : 0.9375
+eval_iteration : 34 eval_loss : 0.2578579783439636 eval_accuracy : 0.90625
+eval_iteration : 35 eval_loss : 0.2587309181690216 eval_accuracy : 0.9140625
+eval_iteration : 36 eval_loss : 0.2687148153781891 eval_accuracy : 0.921875
+eval_iteration : 37 eval_loss : 0.24913397431373596 eval_accuracy : 0.9140625
+eval_iteration : 38 eval_loss : 0.2072753757238388 eval_accuracy : 0.9375
+eval_iteration : 39 eval_loss : 0.19765499234199524 eval_accuracy : 0.921875
+eval_iteration : 40 eval_loss : 0.2525421380996704 eval_accuracy : 0.90625
+eval_iteration : 41 eval_loss : 0.14640045166015625 eval_accuracy : 0.953125
+eval_iteration : 42 eval_loss : 0.1395009607076645 eval_accuracy : 0.9609375
+eval_iteration : 43 eval_loss : 0.09367849677801132 eval_accuracy : 0.984375
+eval_iteration : 44 eval_loss : 0.17059922218322754 eval_accuracy : 0.953125
+eval_iteration : 45 eval_loss : 0.19336339831352234 eval_accuracy : 0.921875
+eval_iteration : 46 eval_loss : 0.23581348359584808 eval_accuracy : 0.90625
+eval_iteration : 47 eval_loss : 0.17399418354034424 eval_accuracy : 0.9453125
+eval_iteration : 48 eval_loss : 0.24716196954250336 eval_accuracy : 0.921875
+eval_iteration : 49 eval_loss : 0.2021442949771881 eval_accuracy : 0.9375
+eval_iteration : 50 eval_loss : 0.247123122215271 eval_accuracy : 0.921875
+eval_iteration : 51 eval_loss : 0.16612745821475983 eval_accuracy : 0.9453125
+eval_iteration : 52 eval_loss : 0.21438047289848328 eval_accuracy : 0.9140625
+eval_iteration : 53 eval_loss : 0.17806783318519592 eval_accuracy : 0.9375
+eval_iteration : 54 eval_loss : 0.2747800648212433 eval_accuracy : 0.9140625
+eval_iteration : 55 eval_loss : 0.13658446073532104 eval_accuracy : 0.96875
+eval_iteration : 56 eval_loss : 0.24017156660556793 eval_accuracy : 0.9296875
+eval_iteration : 57 eval_loss : 0.23826533555984497 eval_accuracy : 0.9140625
+eval_iteration : 58 eval_loss : 0.3278220295906067 eval_accuracy : 0.8671875
+eval_iteration : 59 eval_loss : 0.327568382024765 eval_accuracy : 0.8828125
+eval_iteration : 60 eval_loss : 0.2086244374513626 eval_accuracy : 0.9375
+eval_iteration : 61 eval_loss : 0.20878027379512787 eval_accuracy : 0.9375
+eval_iteration : 62 eval_loss : 0.33505868911743164 eval_accuracy : 0.8828125
+eval_iteration : 63 eval_loss : 0.30474188923835754 eval_accuracy : 0.890625
+eval_iteration : 64 eval_loss : 0.25561466813087463 eval_accuracy : 0.9296875
+eval_iteration : 65 eval_loss : 0.22491008043289185 eval_accuracy : 0.9375
+eval_iteration : 66 eval_loss : 0.2127668857574463 eval_accuracy : 0.9296875
+eval_iteration : 67 eval_loss : 0.1985819786787033 eval_accuracy : 0.9375
+eval_iteration : 68 eval_loss : 0.21174868941307068 eval_accuracy : 0.9296875
+eval_iteration : 69 eval_loss : 0.2780376076698303 eval_accuracy : 0.90625
+eval_iteration : 70 eval_loss : 0.1483183056116104 eval_accuracy : 0.9609375
+eval_iteration : 71 eval_loss : 0.18160200119018555 eval_accuracy : 0.9453125
+eval_iteration : 72 eval_loss : 0.14705711603164673 eval_accuracy : 0.9453125
+eval_iteration : 73 eval_loss : 0.19754013419151306 eval_accuracy : 0.9296875
+eval_iteration : 74 eval_loss : 0.36692366003990173 eval_accuracy : 0.8828125
+eval_iteration : 75 eval_loss : 0.25459223985671997 eval_accuracy : 0.9140625
+eval_iteration : 76 eval_loss : 0.2068103402853012 eval_accuracy : 0.9375
+eval_iteration : 77 eval_loss : 0.20443785190582275 eval_accuracy : 0.9375
+eval_iteration : 78 eval_loss : 0.23771381378173828 eval_accuracy : 0.9375
+eval_iteration : 79 eval_loss : 0.29212862253189087 eval_accuracy : 0.9140625
+eval_iteration : 80 eval_loss : 0.3830120861530304 eval_accuracy : 0.8828125
+eval_iteration : 81 eval_loss : 0.4595513641834259 eval_accuracy : 0.8203125
+eval_iteration : 82 eval_loss : 0.17426279187202454 eval_accuracy : 0.953125
+eval_iteration : 83 eval_loss : 0.27452170848846436 eval_accuracy : 0.9140625
+eval_iteration : 84 eval_loss : 0.2920532822608948 eval_accuracy : 0.890625
+eval_iteration : 85 eval_loss : 0.3125079870223999 eval_accuracy : 0.859375
+eval_iteration : 86 eval_loss : 0.26372748613357544 eval_accuracy : 0.90625
+eval_iteration : 87 eval_loss : 0.3003430664539337 eval_accuracy : 0.890625
+eval_iteration : 88 eval_loss : 0.22447147965431213 eval_accuracy : 0.90625
+eval_iteration : 89 eval_loss : 0.23899312317371368 eval_accuracy : 0.921875
+eval_iteration : 90 eval_loss : 0.20614054799079895 eval_accuracy : 0.953125
+eval_iteration : 91 eval_loss : 0.32889649271965027 eval_accuracy : 0.9140625
+eval_iteration : 92 eval_loss : 0.1732102930545807 eval_accuracy : 0.9523809523809523
+loss : 0.23244804376235573 accuracy : 0.9223710317460317
+eval_iteration : 0 eval_loss : 0.24678945541381836 eval_accuracy : 0.9140625
+eval_iteration : 1 eval_loss : 0.21719464659690857 eval_accuracy : 0.9375
+eval_iteration : 2 eval_loss : 0.26583537459373474 eval_accuracy : 0.921875
+eval_iteration : 3 eval_loss : 0.3020459711551666 eval_accuracy : 0.890625
+eval_iteration : 4 eval_loss : 0.178413525223732 eval_accuracy : 0.9375
+eval_iteration : 5 eval_loss : 0.24188585579395294 eval_accuracy : 0.9140625
+eval_iteration : 6 eval_loss : 0.2476533055305481 eval_accuracy : 0.90625
+eval_iteration : 7 eval_loss : 0.26876962184906006 eval_accuracy : 0.8984375
+eval_iteration : 8 eval_loss : 0.31464892625808716 eval_accuracy : 0.8984375
+eval_iteration : 9 eval_loss : 0.11235244572162628 eval_accuracy : 0.9609375
+eval_iteration : 10 eval_loss : 0.23844407498836517 eval_accuracy : 0.9296875
+eval_iteration : 11 eval_loss : 0.15940353274345398 eval_accuracy : 0.9609375
+eval_iteration : 12 eval_loss : 0.23580436408519745 eval_accuracy : 0.921875
+eval_iteration : 13 eval_loss : 0.27592262625694275 eval_accuracy : 0.90625
+eval_iteration : 14 eval_loss : 0.20246805250644684 eval_accuracy : 0.9375
+eval_iteration : 15 eval_loss : 0.2203187495470047 eval_accuracy : 0.9296875
+eval_iteration : 16 eval_loss : 0.15476246178150177 eval_accuracy : 0.9453125
+eval_iteration : 17 eval_loss : 0.16031527519226074 eval_accuracy : 0.9609375
+eval_iteration : 18 eval_loss : 0.19679398834705353 eval_accuracy : 0.9296875
+eval_iteration : 19 eval_loss : 0.27598974108695984 eval_accuracy : 0.90625
+eval_iteration : 20 eval_loss : 0.2307828813791275 eval_accuracy : 0.9296875
+eval_iteration : 21 eval_loss : 0.24160659313201904 eval_accuracy : 0.921875
+eval_iteration : 22 eval_loss : 0.20340445637702942 eval_accuracy : 0.9375
+eval_iteration : 23 eval_loss : 0.2594462037086487 eval_accuracy : 0.90625
+eval_iteration : 24 eval_loss : 0.1630493700504303 eval_accuracy : 0.953125
+eval_iteration : 25 eval_loss : 0.2687090039253235 eval_accuracy : 0.8984375
+eval_iteration : 26 eval_loss : 0.106528639793396 eval_accuracy : 0.96875
+eval_iteration : 27 eval_loss : 0.16900239884853363 eval_accuracy : 0.9375
+eval_iteration : 28 eval_loss : 0.14972838759422302 eval_accuracy : 0.953125
+eval_iteration : 29 eval_loss : 0.2592228353023529 eval_accuracy : 0.90625
+eval_iteration : 30 eval_loss : 0.2519107758998871 eval_accuracy : 0.90625
+eval_iteration : 31 eval_loss : 0.2545604109764099 eval_accuracy : 0.8984375
+eval_iteration : 32 eval_loss : 0.32176095247268677 eval_accuracy : 0.90625
+eval_iteration : 33 eval_loss : 0.20558461546897888 eval_accuracy : 0.9375
+eval_iteration : 34 eval_loss : 0.29809778928756714 eval_accuracy : 0.90625
+eval_iteration : 35 eval_loss : 0.24787843227386475 eval_accuracy : 0.9296875
+eval_iteration : 36 eval_loss : 0.25998982787132263 eval_accuracy : 0.921875
+eval_iteration : 37 eval_loss : 0.2513238489627838 eval_accuracy : 0.921875
+eval_iteration : 38 eval_loss : 0.2355431467294693 eval_accuracy : 0.90625
+eval_iteration : 39 eval_loss : 0.2427971512079239 eval_accuracy : 0.90625
+eval_iteration : 40 eval_loss : 0.2718770503997803 eval_accuracy : 0.890625
+eval_iteration : 41 eval_loss : 0.2444101870059967 eval_accuracy : 0.9296875
+eval_iteration : 42 eval_loss : 0.20237703621387482 eval_accuracy : 0.9453125
+eval_iteration : 43 eval_loss : 0.19426894187927246 eval_accuracy : 0.9375
+eval_iteration : 44 eval_loss : 0.2926395833492279 eval_accuracy : 0.9140625
+eval_iteration : 45 eval_loss : 0.24178192019462585 eval_accuracy : 0.9140625
+eval_iteration : 46 eval_loss : 0.2574154734611511 eval_accuracy : 0.9296875
+eval_iteration : 47 eval_loss : 0.13638515770435333 eval_accuracy : 0.953125
+eval_iteration : 48 eval_loss : 0.2060745358467102 eval_accuracy : 0.9375
+eval_iteration : 49 eval_loss : 0.2418345957994461 eval_accuracy : 0.9375
+eval_iteration : 50 eval_loss : 0.24785706400871277 eval_accuracy : 0.90625
+eval_iteration : 51 eval_loss : 0.2790081799030304 eval_accuracy : 0.8984375
+eval_iteration : 52 eval_loss : 0.22165341675281525 eval_accuracy : 0.9296875
+eval_iteration : 53 eval_loss : 0.3336184322834015 eval_accuracy : 0.8828125
+eval_iteration : 54 eval_loss : 0.21793416142463684 eval_accuracy : 0.921875
+eval_iteration : 55 eval_loss : 0.2538195848464966 eval_accuracy : 0.921875
+eval_iteration : 56 eval_loss : 0.2375265508890152 eval_accuracy : 0.9140625
+eval_iteration : 57 eval_loss : 0.22156459093093872 eval_accuracy : 0.921875
+eval_iteration : 58 eval_loss : 0.22058086097240448 eval_accuracy : 0.9140625
+eval_iteration : 59 eval_loss : 0.14842574298381805 eval_accuracy : 0.953125
+eval_iteration : 60 eval_loss : 0.3412538468837738 eval_accuracy : 0.875
+eval_iteration : 61 eval_loss : 0.32301074266433716 eval_accuracy : 0.90625
+eval_iteration : 62 eval_loss : 0.26046454906463623 eval_accuracy : 0.8984375
+eval_iteration : 63 eval_loss : 0.2343398779630661 eval_accuracy : 0.90625
+eval_iteration : 64 eval_loss : 0.21509826183319092 eval_accuracy : 0.9375
+eval_iteration : 65 eval_loss : 0.25454801321029663 eval_accuracy : 0.890625
+eval_iteration : 66 eval_loss : 0.14097443222999573 eval_accuracy : 0.9609375
+eval_iteration : 67 eval_loss : 0.18996399641036987 eval_accuracy : 0.953125
+eval_iteration : 68 eval_loss : 0.19647084176540375 eval_accuracy : 0.9375
+eval_iteration : 69 eval_loss : 0.263223797082901 eval_accuracy : 0.8984375
+eval_iteration : 70 eval_loss : 0.14494512975215912 eval_accuracy : 0.9609375
+eval_iteration : 71 eval_loss : 0.21368896961212158 eval_accuracy : 0.921875
+eval_iteration : 72 eval_loss : 0.1708226054906845 eval_accuracy : 0.953125
+eval_iteration : 73 eval_loss : 0.21341833472251892 eval_accuracy : 0.9296875
+eval_iteration : 74 eval_loss : 0.25719237327575684 eval_accuracy : 0.921875
+eval_iteration : 75 eval_loss : 0.23325496912002563 eval_accuracy : 0.921875
+eval_iteration : 76 eval_loss : 0.22421786189079285 eval_accuracy : 0.9375
+eval_iteration : 77 eval_loss : 0.18191903829574585 eval_accuracy : 0.9375
+eval_iteration : 78 eval_loss : 0.2508712708950043 eval_accuracy : 0.90625
+eval_iteration : 79 eval_loss : 0.19964201748371124 eval_accuracy : 0.9375
+eval_iteration : 80 eval_loss : 0.2567482888698578 eval_accuracy : 0.90625
+eval_iteration : 81 eval_loss : 0.17715951800346375 eval_accuracy : 0.9296875
+eval_iteration : 82 eval_loss : 0.22248007357120514 eval_accuracy : 0.9296875
+eval_iteration : 83 eval_loss : 0.15006062388420105 eval_accuracy : 0.953125
+eval_iteration : 84 eval_loss : 0.22918444871902466 eval_accuracy : 0.90625
+eval_iteration : 85 eval_loss : 0.15857337415218353 eval_accuracy : 0.9609375
+eval_iteration : 86 eval_loss : 0.2771816551685333 eval_accuracy : 0.921875
+eval_iteration : 87 eval_loss : 0.24464532732963562 eval_accuracy : 0.921875
+eval_iteration : 88 eval_loss : 0.18099014461040497 eval_accuracy : 0.9375
+eval_iteration : 89 eval_loss : 0.32162341475486755 eval_accuracy : 0.8984375
+eval_iteration : 90 eval_loss : 0.3028930127620697 eval_accuracy : 0.8984375
+eval_iteration : 91 eval_loss : 0.262877494096756 eval_accuracy : 0.90625
+eval_iteration : 92 eval_loss : 0.2978286147117615 eval_accuracy : 0.9047619047619048
+loss : 0.23010064196842972 accuracy : 0.923455101126472
+Saving Data...
+
+Avg eval loss : 0.23127434286539272 
+Avg eval acc : 0.9229130664362518
+Time taken: 3655.64 seconds.
+job done!

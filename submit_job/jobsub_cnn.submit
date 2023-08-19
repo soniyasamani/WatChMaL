@@ -1,0 +1,11 @@
+input                   = /dev/null
+executable              = run_cnn.sh
+arguments               = "-h"
+output                  = output/job_firstred_valbatch.out
+error                   = error/job_firstred_valbatch.err
+log                     = log/job_firstred_valbatch.log
+notification            = never
+request_memory          = 4 GB
+request_GPUs            = 2
+requirements            = (CUDADeviceName =?= "NVIDIA TITAN RTX")
+Queue 1

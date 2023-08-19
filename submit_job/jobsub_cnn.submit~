@@ -1,0 +1,11 @@
+input                   = /dev/null
+executable              = run_cnn.sh
+arguments               = "-h"
+output                  = output/job_100k_res18_mb256.out
+error                   = error/job_100k_res18_mb256.err
+log                     = log/job_100k_res18_mb256.log
+notification            = never
+request_memory          = 4 GB
+request_GPUs            = 2
+requirements            = (CUDADeviceName =?= "NVIDIA TITAN RTX")
+Queue 1

@@ -1,0 +1,11 @@
+input                   = /dev/null
+executable              = test.sh
+arguments               = "-h"
+output                  = output/test-output.txt
+error                   = error/test-error.txt
+log                     = log/test-log.txt
+notification            = never
+request_memory          = 2 GB
+request_GPUs            = 1
+requirements            = (CUDADeviceName =?= "NVIDIA TITAN RTX")
+Queue 1
