@@ -1,1 +1,2 @@
-weight_file: '/path/to/outputs/ClassifierBEST.pth'
+#weight_file: '/path/to/outputs/ClassifierBEST.pth'
+weight_file: '/opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/firstred_ndet/DistributedDataParallelBEST.pth'

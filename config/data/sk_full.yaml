@@ -1,3 +1,3 @@
-split_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/SKROOT_B8_redwit_4MeV_idxs.npz
+split_path: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/npz/cnn.merged.lowfit.splash.firstred.ndet.sk6.r85220.r87220.334.978k.2023-08-14.npz
 dataset:
-  h5file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/SKROOT_B8_redwit_4MeV.h5
+  h5file: /opt/ppd/hyperk/Users/samanis/WatChMaL/inputs/srn/h5/cnn.merged.lowfit.splash.firstred.ndet.sk6.r85220.r87220.334.978k.2023-08-14.h5

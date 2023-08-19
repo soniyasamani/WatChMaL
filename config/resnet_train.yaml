@@ -1,7 +1,8 @@
 gpu_list:
     - 0
+    - 1
 seed: null
-dump_path: './outputs/'
+dump_path: '/opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/firstred_valbatch/'
 defaults:
     - data: sk_full
     - data/dataset: sk_full_cnn

@@ -18,6 +18,7 @@ import logging
 import debugpy
 import os
 import numpy as np
+import time
 
 logger = logging.getLogger('train')
 
@@ -80,7 +81,6 @@ def main_worker_function(rank, ngpus_per_node, is_distributed, config):
         is_distributed  ... boolean indicating if running in multiprocessing mode
         config          ... hydra config specified in the @hydra.main annotation
     """
-    print("rank: ", rank)
     # Infer rank from gpu and ngpus, rank is position in gpu list
     gpu = config.gpu_list[rank]
 
@@ -130,4 +130,6 @@ def main_worker_function(rank, ngpus_per_node, is_distributed, config):
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
+    start_time = time.time()
     main()
+    print("Time taken: %.2f seconds." % (time.time() - start_time))

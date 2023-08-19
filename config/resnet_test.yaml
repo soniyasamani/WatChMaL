@@ -1,11 +1,10 @@
 gpu_list:
     - 0
-    - 1
 seed: null
-dump_path: './outputs/'
+dump_path: '/opt/ppd/hyperk/Users/samanis/WatChMaL/outputs/resnet18/firstred_net/anglered_test/'
 defaults:
-    - data: iwcd_short
-    - data/dataset: iwcd_cnn_short
+    - data: sk_full
+    - data/dataset: sk_full_cnn
     - model: classifier
     - model/feature_extractor: resnet18
     - model/classification_network: resnet_fc
